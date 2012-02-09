@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+s : suspendu
+p : porté
+l : lyre
+0 : incompatible
+1 : compatible
+2 : compatible avec adaptation
+offsetX : Valeur de décalage du point de fixation sur l'axe horizontal, par défaut au centre de la largeur
+offsetY : Valeur de décalage du point de fixation sur l'axe vertical, par défaut en bas en porté, en haut en suspendu
+-->
+
+<luminaires>
+	<luminaire id="jargeau" nom="Jargeau" src="assets/jargeau_main.png">
+		<modele id="jargeau_cl113" nom="CL113" src="assets/jargeau_cl113.png" s="1" p="1" l="0" />
+		<modele id="jargeau_cl114" nom="CL114" src="assets/jargeau_cl114.png" s="1" p="1" l="0" />
+		<modele id="jargeau_400" nom="400" src="assets/jargeau_400.png" s="1" p="1" l="0" />
+		<modele id="jargeau_cl52" nom="CL52" src="assets/jargeau_cl52.png" s="1" p="1" l="0" />
+		<crosse id="beaugency" s="1" p="0" l="0"/>
+		<crosse id="century" s="2" p="2" l="0"/>
+	</luminaire>
+	<luminaire id="parvis" nom="Parvis" src="assets/parvis_main.png" >
+		<modele id="parvis_cl42" nom="CL42" src="assets/parvis_cl42.png" s="1" p="1" l="0" />
+		<modele id="parvis_cl42_chantilly" nom="CL42 Chantilly" src="assets/parvis_cl42_chantilly.png" s="1" p="1" l="0" />
+		<modele id="parvis_cl44" nom="CL44" src="assets/parvis_cl44.png" s="1" p="1" l="0" />
+		<modele id="parvis_cl44_chantilly" nom="CL44 Chantilly" src="assets/parvis_cl44_chantilly.png" s="1" p="1" l="0" />
+		<modele id="parvis_cl44_orient" nom="CL44 Orient" src="assets/parvis_cl44_orient.png" s="0" p="1" l="0" />
+		<modele id="parvis_cl44_lyre" nom="CL44 Lyre" src="assets/parvis_cl44_lyre.png" s="0" p="0" l="1" />
+		<crosse id="beaugency" s="1" p="0" l="0"/>
+		<crosse id="century" s="1" p="2" l="0"/>
+	</luminaire>
+</luminaires>

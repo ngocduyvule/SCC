@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+xM : Valeur de décalage du point de fixation au mât sur l'axe horizontal
+yM : Valeur de décalage du point de fixation au mât sur l'axe vertical
+xL : Valeur de décalage du point de fixation au luminaire sur l'axe horizontal
+yL : Valeur de décalage du point de fixation au luminaire sur l'axe vertical
+-->
+
+<crosses>
+	<crosse id="beaugency" nom="Beaugency" src="assets/beaugency_s900.png" >
+		<modele id="beaugency_s750" nom="750" src="assets/beaugency_s750.png" xM="16" yM="0" xL="236" yL="27" />
+		<modele id="beaugency_s900" nom="900" src="assets/beaugency_s900.png" xM="16" yM="6" xL="275" yL="0" />
+	</crosse>
+	<crosse id="century" nom="Century" src="assets/century_s860.png" >
+		<modele id="century_s860" nom="860" src="assets/century_s860.png" xM="16" yM="0" xL="269" yL="55" />
+	</crosse>
+	<crosse id="notre-dame" nom="Notre-Dame" src="assets/notre-dame_s1050.png" >
+		<modele id="notre-dame_s730" nom="730" src="assets/notre-dame_s730.png" xM="19" yM="115" xL="237" yL="165" />
+		<modele id="notre-dame_s1050" nom="1050" src="assets/notre-dame_s1050.png" xM="22" yM="109" xL="338" yL="250" />
+	</crosse>
+</crosses>
