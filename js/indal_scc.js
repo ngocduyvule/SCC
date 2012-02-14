@@ -3,7 +3,8 @@
 // LE Ngoc-Duy-Vu 2012
 //=================================================================================
 
-imagePath = "images/"
+imagePath = "images/";
+imageHeight = '200';
 
 init();
 function init() {
@@ -59,9 +60,41 @@ function loadXml(file) {
 							arr[i]['crosses'][c]['l'] = crosses[c].getAttribute('l');
 						}
 					}
-					console.log(arr[i]);
+					//console.log(arr[i]);
 					i++;
 				});
 				window[file + 'Array'] = arr;
+				if (file == "luminaires") {
+					loadItems("luminaires");
+				} else  if (file == "crosses") {
+					loadItems("crosses");
+				}
 	});
+}
+
+// Chargement des produits
+function loadItems(file) {
+	for ( var i = 0, c = window[file + 'Array'].length; i < c; i++) {
+		var item = "<li class='" + file + "Item loading'></li>";
+		$('#' + file + ' ul').append(item);
+	}
+	var j = 0;
+	$('#' + file + ' li').each(function(index, el) {
+		var img = new Image();
+		$(img)
+			.load(function () {
+				$(this).hide();
+				$(el)
+					.removeClass('loading')
+					.append(this);
+				$(this).fadeIn();
+			})
+			.error(function () {
+				console.log('erreur : ' + item);
+			})
+			.attr('height', imageHeight)
+			.attr('src', imagePath + window[file + 'Array'][j]['src'])
+			.attr('alt', window[file + 'Array'][j]['id']);
+		j++;
+	})
 }
