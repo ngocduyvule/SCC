@@ -4,7 +4,7 @@
 //=================================================================================
 
 imagePath = "images/";
-imageHeight = '200';
+imageSize = 150;
 
 init();
 function init() {
@@ -75,26 +75,38 @@ function loadXml(file) {
 // Chargement des produits
 function loadItems(file) {
 	for ( var i = 0, c = window[file + 'Array'].length; i < c; i++) {
-		var item = "<li class='" + file + "Item loading'></li>";
+		var item = "<li class='" + file + "Item'><div class='inner loading'></div><div class='" + file + "SubItem'></div></li>";
 		$('#' + file + ' ul').append(item);
 	}
-	var j = 0;
-	$('#' + file + ' li').each(function(index, el) {
+	var $fileLi = $('#' + file + ' li');
+	loadItemImg($fileLi, 0);
+	function loadItemImg(li, l) {
 		var img = new Image();
+		var imgW = imgH = 0;
+		var el = $(li).eq(l);
 		$(img)
-			.load(function () {
+			.load(function() {
+				if(this.width <= this.height) {
+					imgH = imageSize;
+					imgW = (this.width * imageSize) / this.height;
+					$(this).css('padding-top', '10px');
+				} else {
+					imgW = imageSize;
+					imgH = (this.height * imageSize) / this.width;
+					var pad = ((imageSize - imgH) / 2) + 10;
+					$(this).css('padding-top', pad + 'px');
+				}
 				$(this).hide();
-				$(el)
-					.removeClass('loading')
-					.append(this);
-				$(this).fadeIn();
+				var $inner = $('.inner', el);
+				$inner.removeClass('loading').append(this);
+				$(this).fadeIn().attr('width', imgW).attr('height', imgH);
 			})
-			.error(function () {
-				console.log('erreur : ' + item);
-			})
-			.attr('height', imageHeight)
-			.attr('src', imagePath + window[file + 'Array'][j]['src'])
-			.attr('alt', window[file + 'Array'][j]['id']);
-		j++;
-	})
+			.error(function() { console.log('erreur : ' + el); })
+			.attr('src', imagePath + window[file + 'Array'][l]['src'])
+			.attr('alt', window[file + 'Array'][l]['id']);
+		l++;
+		if(l < li.length) {
+			loadItemImg(li, l);
+		}
+	}
 }

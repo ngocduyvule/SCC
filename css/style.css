@@ -195,13 +195,35 @@ td { vertical-align: top; }
  * Author: LE Ngoc-Duy-Vu
  * ========================================================================================================*/
 
+	body { font: 10px Verdana, Arial, Helvetica, sans-serif; color: #767676; background: #333; }
 	.left { float: left; }
 	.clear { clear: both; }
 	.block { display: block; }
 	ul, li { list-style: none outside none; }
 
 	/* Items */
-	li.luminairesItem, li.crossesItem { display: inline-block; }
+	li.luminairesItem, li.crossesItem {
+		display: -moz-inline-stack; display: inline-block; *display: inline;
+		zoom: 1;
+		cursor: pointer; 
+		width: 170px; height: 170px; 
+		text-align: center; text-align: -moz-center; text-align: -webkit-center;
+		border: 5px solid #DDD;
+		-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
+		box-shadow: 2px 2px 5px #222;
+		margin: 5px;
+	}
+	
+	li.luminairesItem .inner, li.crossesItem .inner {
+		width: 100%; height: 100%;
+		text-align: center; text-align: -moz-center; text-align: -webkit-center;
+		background-color: #FFF;
+		box-shadow: 0 2px 5px #AAA inset;
+	}
+	
+	li .loading {
+		background: url('../images/ajax-loader.gif') no-repeat center center;
+	}
 
 
 /* ==|== media queries ======================================================================================
