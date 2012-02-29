@@ -5,12 +5,40 @@
 
 imagePath = "images/";
 imageSize = 150;
+luminairesSelect = "";
+crossesSelect = "";
+nbList = 0;
+indList = 0;
+
 
 init();
 function init() {
 	loadArray = new Array('luminaires', 'crosses');
 	for (var i = loadArray.length - 1; i >= 0; i--) {
 		loadXml(loadArray[i]);
+	}
+	$('#luminairesSelect').on({
+		click: function() {
+			var $cont = $('#listes .luminaires ul');
+			$cont.animate({
+				left: parseInt($cont.css('left'), 10) == 0 ? -$cont.outerWidth() : 0
+			});
+		}
+	});
+	$('#crossesSelect').on({
+		click: function() {
+			var $cont = $('#listes .crosses ul');
+			$cont.animate({
+				left: parseInt($cont.css('left'), 10) == 0 ? -$cont.outerWidth() : 0
+			});
+		}
+	});
+}
+
+function start() {
+	for (var i = loadArray.length - 1; i >= 0; i--) {
+		$('#listes .' + loadArray[i] + ' ul').css('left', parseInt(-$('#listes .' + loadArray[i] + ' ul').outerWidth()));
+		$('#' + loadArray[i] + 'Select').trigger('click');
 	}
 }
 
@@ -62,6 +90,7 @@ function loadXml(file) {
 					}
 					//console.log(arr[i]);
 					i++;
+					nbList++;
 				});
 				window[file + 'Array'] = arr;
 				if (file == "luminaires") {
@@ -74,39 +103,117 @@ function loadXml(file) {
 
 // Chargement des produits
 function loadItems(file) {
-	for ( var i = 0, c = window[file + 'Array'].length; i < c; i++) {
+	for (var i = 0, c = window[file + 'Array'].length; i < c; i++) {
 		var item = "<li class='" + file + "Item'><div class='inner loading'></div><div class='" + file + "SubItem'></div></li>";
-		$('#' + file + ' ul').append(item);
+		$('#listes .' + file + ' ul').append(item);
+		$('li:eq(' + i + ')', $('#listes .' + file + ' ul')).on({
+			mouseenter:  function() {
+				$('.' + file + 'SubItem', this).fadeIn();
+			},
+			mouseleave: function() {
+				$('.' + file + 'SubItem', this).fadeOut();
+			}
+		});
 	}
-	var $fileLi = $('#' + file + ' li');
+	var $fileLi = $('#listes .' + file + ' li');
 	loadItemImg($fileLi, 0);
-	function loadItemImg(li, l) {
+
+	
+	// Chargement des images
+	function loadItemImg(li, l1) {
+		var el = $(li).eq(l1);
 		var img = new Image();
 		var imgW = imgH = 0;
-		var el = $(li).eq(l);
 		$(img)
-			.load(function() {
-				if(this.width <= this.height) {
-					imgH = imageSize;
-					imgW = (this.width * imageSize) / this.height;
-					$(this).css('padding-top', '10px');
-				} else {
-					imgW = imageSize;
-					imgH = (this.height * imageSize) / this.width;
-					var pad = ((imageSize - imgH) / 2) + 10;
-					$(this).css('padding-top', pad + 'px');
-				}
-				$(this).hide();
-				var $inner = $('.inner', el);
-				$inner.removeClass('loading').append(this);
-				$(this).fadeIn().attr('width', imgW).attr('height', imgH);
+			.load(function() {																	// Applique la taille
+				imgW = resizeImg(this, "width", 1);
+				imgH = resizeImg(this, "height", 1);
+				$(this).hide();																		// Cache temporairement
+				var $inner = $('.inner', el);													
+				$inner.removeClass('loading').append(this);						// Retire le chargement
+				$(this).attr('width', imgW).attr('height', imgH).fadeIn();	// Faire apparaître l'image
 			})
 			.error(function() { console.log('erreur : ' + el); })
-			.attr('src', imagePath + window[file + 'Array'][l]['src'])
-			.attr('alt', window[file + 'Array'][l]['id']);
-		l++;
-		if(l < li.length) {
-			loadItemImg(li, l);
-		}
+			.attr('src', imagePath + window[file + 'Array'][l1]['src'])		// Source de l'image
+			.attr('alt', window[file + 'Array'][l1]['id']);								// Alt de l'image
+		loadSubItemImg(li, l1, 0);
+		l1++;
+		indList++;
+		if(file == "luminaires" && indList == nbList) { start(); }
+		if(l1 < li.length) { loadItemImg(li, l1); }
+	}
+	
+	// Chargement des images sub
+	function loadSubItemImg(li, l1, l2) {
+		var $subItem = $('.' + file + 'SubItem', $('#listes .' + file + ' li:eq(' + l1 + ')'));
+		var img = new Image();
+		var imgW = imgH = 0;
+		$(img)
+			.load(function() {																	// Applique la taille
+				imgW = resizeImg(this, "width", 2);
+				imgH = resizeImg(this, "height", 2);
+				$(this).hide();																		// Cache temporairement		
+				$subItem.append("<div class='subInner loading'></div>");
+				var $inner = $('.subInner:last', $subItem);								
+				$inner.removeClass('loading').append(this);						// Retire le chargement
+				$inner.on({
+					mouseenter:  function() {
+						$(this).stop().animate({ backgroundColor: '#CCC' });
+					},
+					mouseleave: function() {
+						$(this).stop().animate({ backgroundColor: '#FFF' });
+					},
+					click: function() {
+						var $sel = $('#' + file + 'Select .inner');
+						var imgS = new Image();
+						var imgSW = imgSH = 0;
+						$sel.empty();
+						$subItem.fadeOut();
+						var $cont = $('#listes .' + file + ' ul');
+						$cont.animate({
+							left: parseInt($cont.css('left'), 10) == 0 ? -$cont.outerWidth() : 0
+						});
+						$(imgS)
+							.load(function() {
+								imgSW = resizeImg(this, "width", 1);
+								imgSH = resizeImg(this, "height", 1);
+								$(this).hide();
+								$sel.removeClass('loading').append(this);
+								$(this).attr('width', imgSW).attr('height', imgSH).fadeIn();
+							})
+							.error(function() { console.log('erreur : ' + $selImg) })
+							.attr('src', $('img', this).attr('src'))
+							.attr('alt', $('img', this).attr('alt'));
+					}
+				});
+				$(this).attr('width', imgW).attr('height', imgH).fadeIn();	// Faire apparaître l'image
+			})
+			.error(function() { console.log('erreur : ' + $subItem); })
+			.attr('src', imagePath + window[file + 'Array'][l1][l2]['src'])	// Source de l'image
+			.attr('alt', window[file + 'Array'][l1][l2]['id']);							// Alt de l'image
+		l2++;
+		if(l2 == window[file + 'Array'][l1].length) { $subItem.css('width', 95 * l2); }
+		if(l2 < window[file + 'Array'][l1].length) { loadSubItemImg(li, l1, l2); }
 	}
 }
+
+// Fonction Size
+function resizeImg(img, size, ratio) {
+	var imgW = imgH = 0;
+	if(img.width <= img.height) {
+		imgH = (imageSize / ratio);
+		imgW = (img.width * (imageSize / ratio)) / img.height;
+		$(img).css('padding-top', '10px');
+	} else {
+		imgW = (imageSize / ratio);
+		imgH = (img.height * (imageSize / ratio)) / img.width;
+		var pad = (((imageSize / ratio) - imgH) / 2) + 10;
+		$(img).css('padding-top', pad + 'px');
+	}
+	if(size == "width") {
+		return imgW;
+	} else {
+		return imgH;
+	}
+}
+
