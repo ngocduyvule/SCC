@@ -4,7 +4,7 @@
 //=================================================================================
 
 imagePath = "images/";
-imageSize = 150;
+imageSize = 100;
 luminairesSelect = "";
 crossesSelect = "";
 nbList = 0;
@@ -19,27 +19,97 @@ function init() {
 	}
 	$('#luminairesSelect').on({
 		click: function() {
-			var $cont = $('#listes .luminaires ul');
+			/*var $cont = $('#listes .luminaires ul');
 			$cont.animate({
-				left: parseInt($cont.css('left'), 10) == 0 ? -$cont.outerWidth() : 0
-			});
+				left: parseInt($cont.css('left'), 10) == 0 ? -$cont.outerWidth()-10 : 0
+			});*/
 		}
 	});
 	$('#crossesSelect').on({
 		click: function() {
-			var $cont = $('#listes .crosses ul');
+			/*var $cont = $('#listes .crosses ul');
 			$cont.animate({
-				left: parseInt($cont.css('left'), 10) == 0 ? -$cont.outerWidth() : 0
-			});
+				left: parseInt($cont.css('left'), 10) == 0 ? -$cont.outerWidth()-10 : 0
+			});*/
 		}
 	});
 }
 
 function start() {
 	for (var i = loadArray.length - 1; i >= 0; i--) {
-		$('#listes .' + loadArray[i] + ' ul').css('left', parseInt(-$('#listes .' + loadArray[i] + ' ul').outerWidth()));
+		//$('#listes .' + loadArray[i] + ' ul').css('left', parseInt(-$('#listes .' + loadArray[i] + ' ul').outerWidth()));
 		$('#' + loadArray[i] + 'Select').trigger('click');
 	}
+	resize();
+}
+
+function resize() {
+	var docW = $(document).width();
+	var docH = $(document).height();
+	var margeM = 100;
+	var tabW = $('.tab').width();
+	
+	var $main = $('#main');
+	var $continset = $('#main .continset');
+	var $title = $('#title');
+	var $choix = $('#choix');
+	var $listes = $('#listes');
+	var $preview = $('#preview');
+	var $output = $('#output');
+	
+	var headerH = $('header').height();
+	var pageW = docW - margeM - $choix.width() - (2 * tabW) - 20;
+	var pageH = ($('.luminaires').outerHeight() * 4) - 10;
+	
+	$main.css({
+		'width':	docW - margeM,
+		'height':	pageH + $title.height(),
+		'left':		margeM / 2,
+		'top':		margeM / 2
+	});
+	
+	$continset.css({
+		'width':	pageW + $choix.width() + (2 * tabW) + 20,
+		'height':	pageH
+	});
+	
+	$choix.css('height', pageH - 20);
+	
+	$listes.css({
+		'left': 		$choix.width() + 20,
+		'top': 		$title.height(),
+		'width': 	pageW,
+		'height':	pageH
+	});
+	$('.cont', $listes).css({
+		'width': 	pageW - 60,
+		'height':	pageH
+	});
+	$('.tab', $listes).css('height',	pageH);
+	
+	$preview.css({
+		'left': 		$choix.width() + 20 + tabW,
+		'top': 		$title.height(),
+		'width': 	pageW,
+		'height':	pageH
+	});
+	$('.cont', $preview).css({
+		'width': 	pageW - 60,
+		'height':	pageH
+	});
+	$('.tab', $preview).height(pageH);
+	
+	$output.css({
+		'left': 		$choix.width() + 20 + (2 * tabW),
+		'top': 		$title.height(),
+		'width': 	pageW,
+		'height':	pageH
+	});
+	$('.cont', $output).css({
+		'width': 	pageW - 60,
+		'height':	pageH
+	});
+	$('.tab', $output).height(pageH);
 }
 
 // Chargement des XML
@@ -169,10 +239,10 @@ function loadItems(file) {
 						var imgSW = imgSH = 0;
 						$sel.empty();
 						$subItem.fadeOut();
-						var $cont = $('#listes .' + file + ' ul');
+						/*var $cont = $('#listes .' + file + ' ul');
 						$cont.animate({
-							left: parseInt($cont.css('left'), 10) == 0 ? -$cont.outerWidth() : 0
-						});
+							left: parseInt($cont.css('left'), 10) == 0 ? -$cont.outerWidth()-10 : 0
+						});*/
 						$(imgS)
 							.load(function() {
 								imgSW = resizeImg(this, "width", 1);
@@ -192,7 +262,7 @@ function loadItems(file) {
 			.attr('src', imagePath + window[file + 'Array'][l1][l2]['src'])	// Source de l'image
 			.attr('alt', window[file + 'Array'][l1][l2]['id']);							// Alt de l'image
 		l2++;
-		if(l2 == window[file + 'Array'][l1].length) { $subItem.css('width', 95 * l2); }
+		if(l2 == window[file + 'Array'][l1].length) { $subItem.css('width', 70 * l2); }
 		if(l2 < window[file + 'Array'][l1].length) { loadSubItemImg(li, l1, l2); }
 	}
 }

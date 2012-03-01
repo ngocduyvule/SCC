@@ -202,25 +202,49 @@ td { vertical-align: top; }
 	ul, li { list-style: none outside none; }
 	
 	#main {
-		
+		position: relative;
+		border: 10px solid #EEE;
+		-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
+		-moz-box-shadow: 0px 0px 10px #222;
+		-webkit-box-shadow: 0px 0px 10px #222;
+		box-shadow: 0px 0px 10px #222;
+	}
+	
+	#title {
+		background-color: #EEE;
+		width: 100%;
+		height: 100px;
+	}
+	
+	#main .continset {
+		-moz-box-shadow: 0 2px 5px #AAA inset;
+		-webkit-box-shadow: 0 2px 5px #AAA inset;
+		box-shadow: 0 2px 5px #333 inset;
+		z-index: 100;
+		position: absolute;
 	}
 	
 	#choix {
-		width: 200px;
-		height: 100%;
+		width: 140px;
 		background-color: #333;
 		z-index: 50;
 		position: relative;
 		float: left;
+		padding: 10px;
+		-moz-box-shadow: 4px 0px 4px -4px #222;
+		-webkit-box-shadow: 4px 0px 4px -4px #222;
+		box-shadow: 4px 0px 4px -4px #222;
 	}
 	
 	#choix .selection {
 		float: left;
 		cursor: pointer; 
-		width: 170px; height: 170px; 
+		width: 120px; height: 120px; 
 		text-align: center; text-align: -moz-center; text-align: -webkit-center;
 		border: 5px solid #CEBD7E;
 		-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
+		-moz-box-shadow: 2px 2px 5px #222;
+		-webkit-box-shadow: 2px 2px 5px #222;
 		box-shadow: 2px 2px 5px #222;
 		margin: 5px;
 		background-color: #333;
@@ -230,17 +254,40 @@ td { vertical-align: top; }
 		background-color: #FFF;
 	}
 	
+	#listes, #preview, #output {
+		position: absolute;
+		overflow: hidden;
+	}
 	
 	#listes {
 		z-index: 40;
-		position: relative;
-		width: 600px;
-		height: 100%;
-		float: left;
+		background-color: #AAA;
 	}
 	
-	.luminaires, .crosses {
-		height: 300px;
+	#preview {
+		z-index: 30;
+		background-color: #CCC;
+	}
+	
+	#output {
+		z-index: 20;
+		background-color: #FFF;
+	}
+	
+	.cont {
+		float: left;
+		height: 100%;
+		padding: 10px;
+	}
+	
+	.tab {
+		width: 40px;
+		float: right;
+		height: 500px;
+	}
+	
+	.luminaires, .contrefeu, .crosses  {
+		height: 220px;
 		position: relative;
 	}
 
@@ -249,10 +296,12 @@ td { vertical-align: top; }
 		display: -moz-inline-stack; display: inline-block; *display: inline;
 		zoom: 1;
 		cursor: pointer; 
-		width: 170px; height: 170px; 
+		width: 120px; height: 120px; 
 		text-align: center; text-align: -moz-center; text-align: -webkit-center;
 		border: 5px solid #DDD;
 		-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
+		-moz-box-shadow: 2px 2px 5px #222;
+		-webkit-box-shadow: 2px 2px 5px #222;
 		box-shadow: 2px 2px 5px #222;
 		margin: 5px;
 	}
@@ -268,6 +317,8 @@ td { vertical-align: top; }
 		width: 100%; height: 100%;
 		text-align: center; text-align: -moz-center; text-align: -webkit-center;
 		background-color: #FFF;
+		-moz-box-shadow: 0 2px 5px #AAA inset;
+		-webkit-box-shadow: 0 2px 5px #AAA inset;
 		box-shadow: 0 2px 5px #AAA inset;
 	}
 	
@@ -277,9 +328,11 @@ td { vertical-align: top; }
 	
 	.luminairesSubItem, .crossesSubItem {
 		width: 950px;
- 		height: 95px;
+ 		height: 70px;
 		border: 5px solid #DDD;
 		-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
+		-moz-box-shadow: 2px 2px 5px #222;
+		-webkit-box-shadow: 2px 2px 5px #222;
 		box-shadow: 2px 2px 5px #222;
 		margin: 5px;
 		display: none;
@@ -290,11 +343,15 @@ td { vertical-align: top; }
 		display: -moz-inline-stack; display: inline-block; *display: inline;
 		zoom: 1;
 		cursor: pointer; 
-		width: 95px; height: 95px;
+		width: 70px; height: 70px;
 		text-align: center; text-align: -moz-center; text-align: -webkit-center;
 		background-color: #FFF;
+		-moz-box-shadow: 0 2px 5px #AAA inset;
+		-webkit-box-shadow: 0 2px 5px #AAA inset;
 		box-shadow: 0 2px 5px #AAA inset;
 	}
+	
+	
 	
 
 
